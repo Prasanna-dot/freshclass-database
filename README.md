@@ -4,7 +4,7 @@
 CREATE DATABASE freshclass;
 ```
 
-## User
+## CREATE TABLE User
 
 ```sql
 CREATE TABLE User(Id int PRIMARY KEY Auto_increment,
@@ -84,4 +84,270 @@ values(7,'Prasanna','Bharati','E0002','prasanna.bharati@freshclass.com','1990-05
 |  6 | deepak    | Pannerselvam | A0005  | deepak.pannerselvam@fwsa.freshworks.com | 2001-01-20 | Male   | Design | Student  | Chennai     | 9791836225 | Deepak@2022   | 2022-03-20 08:14:03 |
 |  7 | Prasanna  | Bharati      | E0002  | prasanna.bharati@freshclass.com         | 1990-05-04 | Female | L&D    | Coach    | chennai     | 9791836225 | Prasanna@2022 | 2022-03-20 08:15:56 |
 
-### 
+### CREATE TABLE Students
+
+```sql
+CREATE table student_link(Id int,
+                          Emp_id char(6) NOT NULL,
+                          ithub_link varchar(255), 
+                          Slack_link varchar(255),
+                          FOREIGN KEY(Id) REFERENCES User(Id));
+```
+
+| Field  | Type    | Null | Key | Default | Extra |
+|:-------|:--------|:-----|:----|:--------|:------|
+| Id     | int     | YES  | MUL | NULL    |       |
+| Emp_id | char(6) | NO   |     | NULL    |       |
+
+### INSERT VALUES INTO Students TABLE
+
+```sql 
+INSERT INTO students(Id,Emp_id) 
+Values(1,'A0001'),
+      (3,'A0002'),
+      (4,'A0003'),
+      (5,'A0004'),
+      (6,'A0005');
+```
+
+| Id   | Emp_id |
+|------|:-------|
+|    1 | A0001  |
+|    3 | A0002  |
+|    4 | A0003  |
+|    5 | A0004  |
+|    6 | A0005  |
+
+### CREATE TABLE Coaches
+
+```sql
+CREATE TABLE Coaches(Id int,
+                     Emp_id char(6) NOT NULL, 
+                     FOREIGN KEY(Id) REFERENCES User(Id));
+```
+
+| Field  | Type    | Null | Key | Default | Extra |
+|:-------|:--------|:-----|:----|:--------|:------|
+| Id     | int     | YES  | MUL | NULL    |       |
+| Emp_id | char(6) | NO   |     | NULL    |       |
+
+### INSERT VALUES INTO Coaches TABLE
+
+```sql
+INSERT INTO coaches(Id,Emp_id) 
+Values(2,'E0001'),
+      (7,'E0002');
+```
+
+| Id   | Emp_id |
+|:-----|:-------|
+|    2 | E0001  |
+|    7 | E0002  |
+
+### CREATE TABLE student_link
+
+```sql
+CREATE table student_link(Id int,
+                          Emp_id char(6) NOT NULL,
+                          Github_link varchar(255), 
+                          Slack_link varchar(255),
+                          FOREIGN KEY(Id) REFERENCES User(Id));
+```
+
+| Field       | Type         | Null | Key | Default | Extra |
+|:------------|:-------------|:-----|:----|:--------|:------|
+| Id          | int          | YES  | MUL | NULL    |       |
+| Emp_id      | char(6)      | NO   |     | NULL    |       |
+| Github_link | varchar(255) | YES  |     | NULL    |       |
+| Slack_link  | varchar(255) | YES  |     | NULL    |       |
+
+
+### INSERT VALUES INTO student_link TABLE
+
+```sql
+INSERT INTO student_link(Id,Emp_id,Github_link,Slack_link) 
+Values(1,'A0001','https://github.com/Prasanna-dot','https://fwbuzz.slack.com/team/U02GHKLS60J'),
+      (3,'A0002','https://github.com/Prasanna-dot','https://fwbuzz.slack.com/team/U02GHKLS60J'),
+      (4,'A0003','https://github.com/Prasanna-dot','https://fwbuzz.slack.com/team/U02GHKLS60J'),
+      (5,'A0004','https://github.com/Prasanna-dot','https://fwbuzz.slack.com/team/U02GHKLS60J'),
+      (6,'A0005','https://github.com/Prasanna-dot','https://fwbuzz.slack.com/team/U02GHKLS60J');
+```
+
+| Id   | Emp_id | Github_link                     | Slack_link                                |
+|:-----|:-------|:--------------------------------|:------------------------------------------|
+|    1 | A0001  | https://github.com/Prasanna-dot | https://fwbuzz.slack.com/team/U02GHKLS60J |
+|    3 | A0002  | https://github.com/Prasanna-dot | https://fwbuzz.slack.com/team/U02GHKLS60J |
+|    4 | A0003  | https://github.com/Prasanna-dot | https://fwbuzz.slack.com/team/U02GHKLS60J |
+|    5 | A0004  | https://github.com/Prasanna-dot | https://fwbuzz.slack.com/team/U02GHKLS60J |
+|    6 | A0005  | https://github.com/Prasanna-dot | https://fwbuzz.slack.com/team/U02GHKLS60J |
+
+### CREATE TABLE student_status
+
+```sql
+CREATE table student_status(Id int,
+                            Emp_id char(6) NOT NULL,
+                            status varchar(20) NOT NULL,
+                            FOREIGN KEY(Id) REFERENCES User(Id),
+                            check (status in ('ACTIVE','INACTIVE')));
+```
+
+| Field  | Type        | Null | Key | Default | Extra |
+|:-------|:------------|:-----|:----|:--------|:------|
+| Id     | int         | YES  | MUL | NULL    |       |
+| Emp_id | char(6)     | NO   |     | NULL    |       |
+| status | varchar(20) | NO   |     | NULL    |       |
+
+### INSERT VALUES INTO student_status TABLE
+
+```sql
+INSERT INTO student_status(Id,Emp_id,status) 
+values(1,'A0001','ACTIVE'),
+      (3,'A0002','ACTIVE'),
+      (4,'A0003','ACTIVE'),
+      (5,'A0004','ACTIVE'),
+      (6,'A0005','ACTIVE');
+```
+
+| Id   | Emp_id | status |
+|:-----|:-------|:-------|
+|    1 | A0001  | ACTIVE |
+|    3 | A0002  | ACTIVE |
+|    4 | A0003  | ACTIVE |
+|    5 | A0004  | ACTIVE |
+|    6 | A0005  | ACTIVE |
+
+### CREATE TABLE Attendance
+
+```sql
+CREATE TABLE Attendance(Id int,
+                        Emp_id char(6) NOT NULL,
+                        Attendance tinyint(1),
+                        Attendance_date date, 
+                        FOREIGN KEY(Id) REFERENCES User(Id));
+```
+
+| Field           | Type       | Null | Key | Default | Extra |
+|:----------------|:-----------|:-----|:----|:--------|:------|
+| Id              | int        | YES  | MUL | NULL    |       |
+| Emp_id          | char(6)    | NO   |     | NULL    |       |
+| Attendance      | tinyint(1) | YES  |     | NULL    |       |
+| Attendance_date | date       | YES  |     | NULL    |       |
+
+### INSERT VALUES INTO Attendance TABLE
+
+```sql
+INSERT INTO Attendance(Id,Emp_id,Attendance,Attendance_date) 
+values(1,'A0001',1,'2020-03-20'),
+      (3,'A0002',0,'2020-03-20'),
+      (4,'A0003',1,'2020-03-20'),
+      (5,'A0004',1,'2020-03-20'),
+      (6,'A0005',1,'2020-03-20');
+```
+
+| Id   | Emp_id | Attendance | Attendance_date | noted_date          |
+|:-----|:-------|:-----------|:----------------|:--------------------|
+|    1 | A0001  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    3 | A0002  |          0 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    4 | A0003  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    5 | A0004  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    6 | A0005  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+
+### CREATE TABLE Attendance
+
+```sql
+CREATE TABLE Attendance(Id int,
+                        Emp_id char(6) NOT NULL,
+                        Attendance tinyint(1),
+                        Attendance_date date, 
+                        FOREIGN KEY(Id) REFERENCES User(Id));
+```
+
+| Field           | Type       | Null | Key | Default | Extra |
+|:----------------|:-----------|:-----|:----|:--------|:------|
+| Id              | int        | YES  | MUL | NULL    |       |
+| Emp_id          | char(6)    | NO   |     | NULL    |       |
+| Attendance      | tinyint(1) | YES  |     | NULL    |       |
+| Attendance_date | date       | YES  |     | NULL    |       |
+
+### INSERT VALUES INTO Attendance TABLE
+
+```sql
+INSERT INTO Attendance(Id,Emp_id,Attendance,Attendance_date) 
+values(1,'A0001',1,'2020-03-20'),
+      (3,'A0002',0,'2020-03-20'),
+      (4,'A0003',1,'2020-03-20'),
+      (5,'A0004',1,'2020-03-20'),
+      (6,'A0005',1,'2020-03-20');
+```
+
+| Id   | Emp_id | Attendance | Attendance_date | noted_date          |
+|:-----|:-------|:-----------|:----------------|:--------------------|
+|    1 | A0001  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    3 | A0002  |          0 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    4 | A0003  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    5 | A0004  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+|    6 | A0005  |          1 | 2020-03-20      | 2022-03-20 08:43:17 |
+
+### CREATE TABLE Assignment
+
+```sql
+CREATE TABLE Assignment(Id int primary key auto_increment, 
+                        Subject_name varchar(100) NOT NULL, 
+                        Ass_name varchar(100) NOT NULL, 
+                        Dead_line date, 
+                        created_date timestamp not null default current_timestamp);
+```
+
+| Field        | Type         | Null | Key | Default           | Extra             |
+|:-------------|:-------------|:-----|:----|:------------------|:------------------|
+| Id           | int          | NO   | PRI | NULL              | auto_increment    |
+| Subject_name | varchar(100) | NO   |     | NULL              |                   |
+| Ass_name     | varchar(100) | NO   |     | NULL              |                   |
+| Dead_line    | date         | YES  |     | NULL              |                   |
+| created_date | timestamp    | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+
+
+### INSERT VALUES INTO Assignment TABLE
+
+```sql
+INSERT INTO Assignment(subject_name,Ass_name,dead_line) 
+VALUES('ELS','ELST2','2020-03-18'),
+      ('ELS','ELST3','2020-03-21');
+```
+
+| Id | Subject_name | Ass_name | Dead_line  | created_date        |
+|:---|:-------------|:---------|:-----------|:--------------------|
+|  1 | ELS          | ELST2    | 2020-03-18 | 2022-03-20 08:46:40 |
+|  2 | ELS          | ELST3    | 2020-03-21 | 2022-03-20 08:46:40 |
+
+### CREATE TABLE Schedules
+
+```sql
+CREATE TABLE Assignment(Id int primary key auto_increment, 
+                        Subject_name varchar(100) NOT NULL, 
+                        Ass_name varchar(100) NOT NULL, 
+                        Dead_line date, 
+                        created_date timestamp not null default current_timestamp);
+```
+
+| Field        | Type         | Null | Key | Default           | Extra             |
+|:-------------|:-------------|:-----|:----|:------------------|:------------------|
+| Id           | int          | NO   | PRI | NULL              | auto_increment    |
+| Subject_name | varchar(100) | NO   |     | NULL              |                   |
+| Ass_name     | varchar(100) | NO   |     | NULL              |                   |
+| Dead_line    | date         | YES  |     | NULL              |                   |
+| created_date | timestamp    | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+
+
+### INSERT VALUES INTO Schedules TABLE
+
+```sql
+ INSERT INTO Schedules(Class_name,schedule_date,time_in,time_out) 
+ VALUES('ELS','2020-03-16','09:00:00','10:00:00'),
+       ('Tech','2020-03-16','11:30:00','01:00:00');
+```
+
+| Id | Class_name | Schedule_date | Time_in  | Time_out | Scheduled_date      |
+|:---|:-----------|:--------------|:---------|:---------|:--------------------|
+|  1 | ELS        | 2020-03-16    | 09:00:00 | 10:00:00 | 2022-03-20 08:49:56 |
+|  2 | Tech       | 2020-03-16    | 11:30:00 | 01:00:00 | 2022-03-20 08:49:56 |
